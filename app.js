@@ -3,7 +3,7 @@ const express = require ('express');
 const app = express();
 const chalk = require('chalk');
 const morgan = require ('morgan');
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 const mongoose = require ('mongoose');
 
 //import api routes
@@ -11,12 +11,12 @@ const api = require('./src/routes/api');
 
 //setup mongoose and mongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/treatment-api',{
-  useNewUrlParser: true
+  useNewUrlParser: true, useCreateIndex: true
 });
 
 mongoose.connection.on('connected', () => {
   console.log("Successful")
-})
+});
 
 //Middleware
 app.use(morgan('combined'));
