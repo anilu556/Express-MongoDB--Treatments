@@ -4,13 +4,14 @@ const app = express();
 const chalk = require('chalk');
 const morgan = require ('morgan');
 const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI
 const mongoose = require ('mongoose');
 
 //import api routes
 const api = require('./src/routes/api');
 
 //setup mongoose and mongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/treatment-api',{
+mongoose.connect(MONGODB_URI,{
   useNewUrlParser: true, useCreateIndex: true
 });
 
