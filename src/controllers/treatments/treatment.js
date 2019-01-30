@@ -39,23 +39,13 @@ const findBy = (req, res) => {
     const newAppointment = new Appointment({
       _id: mongoose.Types.ObjectId(),
       treatmentId: body._id,
-      day
+      day,
+      phoneNumber: 136363533,
+      name: "Ana",
+      user: body.user
     })
 
-    newAppointment
-    .save()
-    .then( data => {
-      res.json({
-        type: 'New Appointment',
-        data: data
-      })
-      .status(200)
-
-    })
-    .catch(err =>{
-      console.log(`Caught error: ${err}`);
-      return res.status(500).json(err);
-    })
+    newAppointment.save()
     return newAppointment._id
   }
   const create = (req, res) => {

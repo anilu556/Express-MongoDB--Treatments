@@ -3,7 +3,7 @@ const app = Router();
 
 const Users = require('../controllers/users/user')
 const Treatments = require('../controllers/treatments/treatment')
-// const Appointments = require('../controllers/treatments/appointments')
+const Appointments = require('../controllers/appointments/appointment')
 
 //Users routes
 
@@ -18,14 +18,14 @@ app.put('/users/:userId', Users.updateBy);
 
 app.get('/treatments', Treatments.index);
 app.get('/treatments/:treatmentId', Treatments.findBy);
-// app.get('/treatments/:treatmentId/appointments', Users.findAppointmentsBy)
 app.post('/treatments', Treatments.create);
+// app.get('/treatments/:treatmentId/appointments', Users.findAppointmentsBy)
 // app.put('/treatments/:id', Treatments.updateBy);
 // app.delete('/treatments/:treatmentId', Treatments.removeBy);
 
 // Appointments routes
 
-// app.get('/appointments', Appointments.index);
+app.get('/appointments', Appointments.index);
 // app.get('/appointments/:appointmenstId', Appointments.findBy);
 // app.put('/appointments/:id', Appointments.updateBy);
 // app.delete('/appointments/:appointmentsId', Appointments.removeBy);
