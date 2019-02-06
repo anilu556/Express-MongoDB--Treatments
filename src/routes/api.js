@@ -1,18 +1,25 @@
 const { Router } = require('express');
 const app = Router();
 
+//requerir Auth
+const isAuthenticated = require('../../services/Auth');
+
 const Users = require('../controllers/users/user')
 const Treatments = require('../controllers/treatments/treatment')
 const Appointments = require('../controllers/appointments/appointment')
 
 //Users routes
 
-app.get('/users', Users.index);
-app.get('/users/:userId', Users.findBy);
+app.get('/users', isAuthenticated, Users.index);
+app.get('/users/:userId', isAuthenticated, Users.findBy);
 app.get('/users/:userId/treatments', Users.findTreatmentsBy)
-app.post('/users', Users.create);
-app.put('/users/:userId', Users.updateBy);
+//app.post('/users', Users.create);
+app.put('/users/:userId', isAuthenticated, Users.updateBy);
 // app.delete('/users/:userId', Users.removeBy);
+
+// auth routes
+app.post('/auth/signup', Users.signup)
+app.post('/auth/login', Users.login)
 
 //Treatments routes
 
