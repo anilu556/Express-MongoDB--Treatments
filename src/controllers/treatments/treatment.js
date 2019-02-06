@@ -6,10 +6,10 @@ const index = (req, res) => {
   Treatment
     .find()
     .exec()
-    .then(data => {
+    .then(users => {
       res.json({
         type: 'Getting Treatments',
-        data: data
+        users
       })
       .status(200)
     })
@@ -22,10 +22,10 @@ const index = (req, res) => {
 const findBy = (req, res) => {
   Treatment
     .findById( req.params.treatmentId)
-    .then( data => {
+    .then( users => {
       res.json({
         type: 'Found treatment by id',
-        data: data
+        users
       })
       .status(200)
     })
@@ -62,10 +62,10 @@ const findBy = (req, res) => {
     })
     newTreatment
       .save()
-      .then(data =>{
+      .then(users =>{
         res.json({
           type: 'New Treatment',
-          data: data
+          users
         })
         .status(200)
       })
@@ -75,6 +75,29 @@ const findBy = (req, res) => {
       })
   }
 
+  const deleteTreatmentBy = (req, res) => {
+    Treatment
+      .findById(req.params.treatmentId, function(err, treatment){
+        // console.log(req.params)
+        if(!err){
+          Appointment.deleteMany({user: {$in:[treatment._id]}}, function(err){})
+          treatment
+            .remove()
+            .then(() => {
+              res
+              .status(200)
+              .json({
+                message:'Treatment was deleted'
+              });
+            });
+        }
+      })
+      .catch(err => {
+        console.log(`caught error: ${err}`);
+        return res.status(401).json({message: 'You dont have permission'})
+      })
+  }
+
 module.exports = {
-  index, findBy, create
+  index, findBy, create, deleteTreatmentBy
 }

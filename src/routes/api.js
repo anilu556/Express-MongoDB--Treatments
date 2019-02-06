@@ -23,12 +23,12 @@ app.post('/auth/login', Users.login)
 
 //Treatments routes
 
-app.get('/treatments', Treatments.index);
-app.get('/treatments/:treatmentId', Treatments.findBy);
-app.post('/treatments', Treatments.create);
+app.get('/treatments', isAuthenticated, Treatments.index);
+app.get('/treatments/:treatmentId', isAuthenticated, Treatments.findBy);
+app.post('/treatments', isAuthenticated, Treatments.create);
 // app.get('/treatments/:treatmentId/appointments', Users.findAppointmentsBy)
-// app.put('/treatments/:id', Treatments.updateBy);
-// app.delete('/treatments/:treatmentId', Treatments.removeBy);
+// app.put('/treatments/:id', isAuthenticated, Treatments.updateBy);
+app.delete('/treatments/:treatmentId', isAuthenticated, Treatments.deleteTreatmentBy);
 
 // Appointments routes
 
