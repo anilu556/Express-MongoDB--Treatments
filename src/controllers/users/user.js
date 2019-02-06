@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../../models/User');
 const Treatment = require('../../models/Treatment');
+const Appointment = require('../../models/Appointment')
 const bcrypt = require('bcrypt');
 //requerimos jwt
 const jwt = require('jsonwebtoken');
@@ -231,7 +232,29 @@ const index = (req, res) =>  {
         return res.status(500).json(err)
       })
     }
+    const deleteBy = (req, res) => {
+      User
+        .findById(req.params.userId, function(err, user){
+          if(!err){
+            Appointment.deleteMany({user: {$in:[user._id]}}, function(err){})
+            Treatment.deleteMany({user: {$in: [user._id]}},function(err){})
+            user
+              .remove()
+              .then(() => {
+                res
+                .status(200)
+                .json({
+                  message:'User was deleted'
+                });
+              });
+          }
+        })
+        .catch(err => {
+          console.log(`caught error: ${err}`);
+          return res.status(401).json({message: 'You dont have permission'})
+        })
+    }
 
 module.exports = {
-  index, create, findBy, updateBy, findTreatmentsBy, signup, login
+  index, create, findBy, updateBy, findTreatmentsBy, signup, login, deleteBy
 }

@@ -15,7 +15,7 @@ app.get('/users/:userId', isAuthenticated, Users.findBy);
 app.get('/users/:userId/treatments', Users.findTreatmentsBy)
 //app.post('/users', Users.create);
 app.put('/users/:userId', isAuthenticated, Users.updateBy);
-// app.delete('/users/:userId', Users.removeBy);
+app.delete('/users/:userId', isAuthenticated,  Users.deleteBy);
 
 // auth routes
 app.post('/auth/signup', Users.signup)
